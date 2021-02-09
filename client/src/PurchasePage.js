@@ -12,7 +12,7 @@ const PurchasPage = () => {
 			setTotal(0);
 			console.log("Stop playing Games");
 		} else {
-			let amount = quantity * 5;
+			let amount = quantity * 20;
 			setTotal(amount);
 		}
 	};
@@ -30,29 +30,10 @@ const PurchasPage = () => {
 		const myData = {
 			merchant_id: "10798473",
 			merchant_key: "qtbv3djb4afpj",
-			//where your app goes after successfull payment
-			return_url: "https://payfast-integration.herokuapp.com/",
-
-			//where app goes after payment fail or cancel
-			cancel_url: "https://payfast-integration.herokuapp.com/",
-
-			//backend url where www.yourbackend.com/fastpay-payment-success
-			notify_url: "https://payfast-integration.herokuapp.com/",
-
-			//customer details
-			name_first: "Customer Name",
-			name_last: "Customer Last name",
 			email_address: "sample_mail@gmail.com",
-
-			//transaction details
 			amount: total.toString(),
-			item_name: "test Item name",
-
-			//for email confirmation
-			email_confirmation: "1",
-			confirmation_address: "sample_mail@gmail.com",
+			item_name: "test",
 		};
-		const passPhrase = "";
 		const generateSignature = (data, passPhrase = null) => {
 			// Create parameter string
 			let pfOutput = "";
@@ -106,7 +87,7 @@ const PurchasPage = () => {
 		};
 
 		// Generate signature (see Custom Integration -> Step 2)
-		myData["signature"] = generateSignature(myData, passPhrase);
+		myData["signature"] = generateSignature(myData);
 
 		// Convert the data array to a string
 		const pfParamString = dataToString(myData);
@@ -156,7 +137,7 @@ const PurchasPage = () => {
 
 					{total <= 0 ? (
 						<Button variant="outline-info text-success" block disabled>
-							Total R{total}, Confirm number of ITEMS to pay{" "}
+							Total R{total}, Confirm number of tunnels to pay{" "}
 							<i className="fas fa-credit-card ml-2"></i>
 						</Button>
 					) : (
@@ -166,7 +147,7 @@ const PurchasPage = () => {
 							type="submit"
 							onClick={initiatePayment}
 						>
-							Your total is R{total} Pay with Payfast{" "}
+							Your total is R{total} Click to Pay{" "}
 							<i className="fas fa-credit-card ml-2"></i>
 						</Button>
 					)}
