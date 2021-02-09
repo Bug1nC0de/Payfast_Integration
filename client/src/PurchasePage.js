@@ -12,7 +12,7 @@ const PurchasPage = () => {
 			setTotal(0);
 			console.log("Stop playing Games");
 		} else {
-			let amount = quantity * 20;
+			let amount = quantity * 5;
 			setTotal(amount);
 		}
 	};
@@ -166,7 +166,7 @@ const PurchasPage = () => {
 							type="submit"
 							onClick={initiatePayment}
 						>
-							Your total is R{total} Click to Pay{" "}
+							Your total is R{total} Pay with Payfast{" "}
 							<i className="fas fa-credit-card ml-2"></i>
 						</Button>
 					)}
