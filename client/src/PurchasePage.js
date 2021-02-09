@@ -33,6 +33,7 @@ const PurchasPage = () => {
 			email_address: "sample_mail@gmail.com",
 			amount: total.toString(),
 			item_name: "test",
+			payment_method: "cc",
 		};
 		const generateSignature = (data, passPhrase = null) => {
 			// Create parameter string
