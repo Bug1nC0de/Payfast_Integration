@@ -28,8 +28,8 @@ const PurchasPage = () => {
 
 	const initiatePayment = async () => {
 		const myData = {
-			merchant_id: "10000100",
-			merchant_key: "46f0cd694581a",
+			merchant_id: "10798473",
+			merchant_key: "qtbv3djb4afpj",
 			//where your app goes after successfull payment
 			return_url: "https://payfast-integration.herokuapp.com/",
 
