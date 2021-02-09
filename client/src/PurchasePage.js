@@ -31,13 +31,13 @@ const PurchasPage = () => {
 			merchant_id: "10000100",
 			merchant_key: "46f0cd694581a",
 			//where your app goes after successfull payment
-			return_url: "www.google.com",
+			return_url: "https://payfast-integration.herokuapp.com/",
 
 			//where app goes after payment fail or cancel
-			cancel_url: "www.google.com",
+			cancel_url: "https://payfast-integration.herokuapp.com/",
 
 			//backend url where www.yourbackend.com/fastpay-payment-success
-			notify_url: "www.google.com",
+			notify_url: "https://payfast-integration.herokuapp.com/",
 
 			//customer details
 			name_first: "Customer Name",
@@ -156,7 +156,7 @@ const PurchasPage = () => {
 
 					{total <= 0 ? (
 						<Button variant="outline-info text-success" block disabled>
-							Total R{total}, Confirm number of tunnels to pay{" "}
+							Total R{total}, Confirm number of ITEMS to pay{" "}
 							<i className="fas fa-credit-card ml-2"></i>
 						</Button>
 					) : (
