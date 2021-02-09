@@ -33,7 +33,6 @@ const PurchasPage = () => {
 			email_address: "sample_mail@gmail.com",
 			amount: total.toString(),
 			item_name: "test",
-			payment_method: "cc",
 		};
 		const generateSignature = (data, passPhrase = null) => {
 			// Create parameter string
@@ -76,7 +75,7 @@ const PurchasPage = () => {
 
 		const generatePaymentIdentifier = async (pfParamString) => {
 			const result = await axios
-				.post(`https://www.payfast.co.za/onsite/process`, pfParamString)
+				.post(`https://www.payfast.co.za/onsite/process`, pfParamString,{crossDomain:true})
 				.then((res) => {
 					return res.data.uuid || null;
 				})
