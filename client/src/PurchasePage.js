@@ -28,10 +28,11 @@ const PurchasPage = () => {
 
 	const initiatePayment = async () => {
 		setLoading(true);
-		const response = await axios.post(
-			"http://localhost:5000/get-payment-token",
-			{ email_address: "sample@gmail.com", amount: total, item_name: "test" }
-		);
+		const response = await axios.post("/get-payment-token", {
+			email_address: "sample@gmail.com",
+			amount: total,
+			item_name: "test",
+		});
 		window.payfast_do_onsite_payment(response.data, function (result) {
 			if (result === true) {
 				// Payment Completed
