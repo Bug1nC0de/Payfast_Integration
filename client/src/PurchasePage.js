@@ -6,6 +6,7 @@ import crypto from 'crypto'
 const PurchasPage = () => {
     const [quantity, setQuantity] = useState(0);
     const [total, setTotal] = useState(0);
+    const [isLoading, setLoading] = useState(false)
 
 
     const calculateTotal = () => {
@@ -29,72 +30,16 @@ const PurchasPage = () => {
 
 
     const initiatePayment = async () => {
-        const myData = {
-            "merchant_id": "10798473",
-            "merchant_key": "qtbv3djb4afpj",
-            "email_address": "sample_mail@gmail.com",
-            "amount": total.toString(),
-            "item_name": "test",
-        };
-        const generateSignature = (data, passPhrase = null) => {
-            // Create parameter string
-            let pfOutput = "";
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
-                    if (data[key] !== "") {
-                        console.log(data[key])
-                        pfOutput += `${key}=${encodeURIComponent(data[key].trim()).replace(/%20/g, " + ")}&`
-                    }
-                }
-            }
-
-            // Remove last ampersand
-            let getString = pfOutput.slice(0, -1);
-            if (passPhrase !== null) {
-                getString += `&passphrase=${encodeURIComponent(passPhrase.trim()).replace(/%20/g, "+")}`;
-            }
-
-            return crypto.createHash("md5").update(getString).digest("hex");
-        };
-        const dataToString = (dataArray) => {
-            // Convert your data array to a string
-            let pfParamString = "";
-            for (let key in dataArray) {
-                if (dataArray.hasOwnProperty(key)) {
-                    pfParamString += `${key}=${encodeURIComponent(dataArray[key].trim()).replace(/%20/g, "+")}&`;
-                }
-            }
-            // Remove last ampersand
-            return pfParamString.slice(0, -1);
-        };
-
-        const generatePaymentIdentifier = async (pfParamString) => {
-            const result = await axios.post(`https://www.payfast.co.za/onsite/process`, pfParamString)
-                .then((res) => {
-                    return res.data.uuid || null;
-                })
-                .catch((error) => {
-                    console.error(error)
-                });
-            console.log("res.data", result);
-            return result;
-        };
-
-// Generate signature (see Custom Integration -> Step 2)
-        myData["signature"] = generateSignature(myData);
-
-// Convert the data array to a string
-        const pfParamString = dataToString(myData);
-
-// Generate payment identifier
-        const identifier = await generatePaymentIdentifier(pfParamString);
-
-        window.payfast_do_onsite_payment({"uuid": identifier}, function (result) {
+        setLoading(true)
+        const response = await axios.post("http://localhost:5000/get-payment-token",{email_address:"sample@gmail.com",amount:total,item_name:"test"})
+        window.payfast_do_onsite_payment(response.data, function (result) {
             if (result === true) {
                 // Payment Completed
+                setLoading(false)
                 paymentSuccess()
             } else {
                 // Payment Window Closed
+                setLoading(false)
                 paymentCancelled()
             }
         });
@@ -136,11 +81,12 @@ const PurchasPage = () => {
                             <i className="fas fa-credit-card ml-2"></i>
                         </Button>
                     ) : (
-                        <Button variant="success" block type="submit" onClick={initiatePayment}>
-                            Your total is R{total} Click to Pay{" "}
+                        <Button disabled={isLoading} variant="success" block type="submit" onClick={initiatePayment}>
+                            {isLoading?"Getting Meta Data for Payment...":`Your total is R${total} Click to Pay`}
                             <i className="fas fa-credit-card ml-2"></i>
                         </Button>
                     )}
+
                     {/*</Form>*/}
                 </Card>
             </Row>
