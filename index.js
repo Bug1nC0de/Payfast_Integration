@@ -20,7 +20,7 @@ app.post("/get-payment-token", async (req, res, next) => {
 		amount: parseFloat(req.body.amount).toString(),
 		item_name: req.body.item_name,
 	};
-	consol.log(myData);
+	console.log('My Data Array', myData);
 	const generateSignature = (data, passPhrase = null) => {
 		// Create parameter string
 		let pfOutput = "";
