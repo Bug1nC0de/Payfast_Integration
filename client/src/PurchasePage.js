@@ -64,7 +64,7 @@ const PurchasPage = () => {
 								onChange={(e) => setQuantity(e.target.value)}
 							/>
 							<InputGroup.Append>
-								<Button onClick={calculateTotal}>
+								<Button onClick={calculateTotal} style={{zIndex:"0"}}>
 									Confirm <i className="far fa-check-circle"></i>
 								</Button>
 							</InputGroup.Append>
